@@ -11,7 +11,7 @@ namespace DataBulkAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class ActorsController : ControllerBase
     {
         private readonly DataBulkDbContext _dbContext;
@@ -53,14 +53,14 @@ namespace DataBulkAPI.Controllers
             var checkPhone= _dbContext.Actors.FirstOrDefault(e => e.Phone == actorToAdd.Phone);
             if (checkPhone != null)
             {
-                ModelState.AddModelError("", $"the Number {checkPhone.Phone} is in used");
+                ModelState.AddModelError("", $"The number {checkPhone.Phone} is in used");
                 return BadRequest(ModelState);
                 
             }
 
             if (checkEmail != null)
             {
-                ModelState.AddModelError("", $"the Number {checkEmail.Email} is in used");
+                ModelState.AddModelError("", $"The email {checkEmail.Email} is in used");
                 return BadRequest(ModelState);
             }
 
@@ -93,6 +93,7 @@ namespace DataBulkAPI.Controllers
                 var actor = await _dbContext.Actors.FindAsync(id);
                 if (actor == null)
                 {
+                   
                     return NotFound($"There is no actor with ID:{id}");
                 }
 
@@ -103,7 +104,8 @@ namespace DataBulkAPI.Controllers
                 {
                     if (checkEmail.Id != actor.Id)
                     {
-                        return BadRequest("Email Can't be Updated, is used by an other user");
+                        ModelState.AddModelError("", "Email Can't be Updated, is used by an other user");
+                        return BadRequest(ModelState);
                     }
                 }
 
@@ -111,7 +113,8 @@ namespace DataBulkAPI.Controllers
                 {
                     if (checkPhone.Id != actor.Id)
                     {
-                        return BadRequest("Phone Can't be Updated, is used by an other user");
+                        ModelState.AddModelError("", "Phone Can't be Updated, is used by an other user");
+                        return BadRequest(ModelState);
                     }
                 }
 

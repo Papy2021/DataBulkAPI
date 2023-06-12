@@ -50,9 +50,6 @@ namespace DataBulkAPI.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(RegisterUserRequestModel newUser)
         {
-
-
-
             if (ModelState.IsValid)
             {
                 try
@@ -83,6 +80,7 @@ namespace DataBulkAPI.Controllers
                     return BadRequest(ex.Message);
                 }
             }
+
             return BadRequest(ModelState);
         }
 
@@ -142,7 +140,7 @@ namespace DataBulkAPI.Controllers
                     var token = Generate(user);
                     return Ok(token);
                 }
-                return NotFound("User not exist");
+                return NotFound("Wrong username and/or password");
             }
             return NotFound(ModelState);
             }

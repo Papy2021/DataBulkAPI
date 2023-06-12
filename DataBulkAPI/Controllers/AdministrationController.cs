@@ -8,7 +8,7 @@ using System.Data;
 
 namespace DataBulkAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize(Roles = "SuperAdmin")]
     public class AdministrationController : ControllerBase
