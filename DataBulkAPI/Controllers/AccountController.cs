@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -36,8 +37,15 @@ namespace DataBulkAPI.Controllers
         }
 
      
-
-
+        //Method To Hahs the Password for security.
+        private static string HashPassword(string password)
+        {
+            var vSha=SHA256.Create();
+            var vByteArray=Encoding.Default.GetBytes(password);
+            var vHashedPassword=vSha.ComputeHash(vByteArray);
+            var stringHashedPassword=Convert.ToBase64String(vHashedPassword);
+            return stringHashedPassword;
+        }
 
 
 
@@ -63,17 +71,15 @@ namespace DataBulkAPI.Controllers
                     }
                     var user = new UserModel
                     {
-
                         Username = newUser.Email,
                         EmailAddress = newUser.Email,
-                        Password = newUser.Password,
+                        Password = HashPassword(newUser.Password) ,
                     
                         Role = "Default"
                         };
                         await _db.Users.AddAsync(user);
                         await _db.SaveChangesAsync();   
                         return Ok($"User added {newUser.Email}");
-                    
                 }
                 catch (Exception ex)
                 {
@@ -87,11 +93,12 @@ namespace DataBulkAPI.Controllers
 
 
 
+
         private UserModel Authenticate(UserLoginRequestModel userlogin)
         {
 
-           
-            var currentUser=_db.Users.FirstOrDefault(u=>u.Username.ToLower() == userlogin.Username.ToLower()&&u.Password== userlogin.Password);
+           var hashedPassword= HashPassword(userlogin.Password);
+            var currentUser=_db.Users.FirstOrDefault(u=>u.Username.ToLower() == userlogin.Username.ToLower()&&u.Password== hashedPassword);
             if (currentUser != null) { return currentUser; } return null;
             
      
