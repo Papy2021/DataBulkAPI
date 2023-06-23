@@ -2,6 +2,6 @@
 {
     public class EditUserRoleRequestModel
     {
-        public string? userName { set; get;}
+        public string? UserName { set; get;}
     }
 }

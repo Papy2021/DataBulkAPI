@@ -9,7 +9,7 @@ namespace DataBulkAPI.Models
 
         [Required]
         [MaxLength(50, ErrorMessage ="Name Length is out of range, username should have 50 carateres max")]
-        [MinLength(4, ErrorMessage ="The UserName must have at 4 caracteres in minimum ")]
+        [MinLength(4, ErrorMessage ="The UserName must have 4 caracteres in minimum ")]
         public string? Username { get; set; }
         [Required]
         [EmailAddress]
@@ -19,7 +19,6 @@ namespace DataBulkAPI.Models
         [Required]
         [DataType(DataType.Password)]
         [MinLength(8,ErrorMessage ="The Email should contain 8 Caracteres minimum")]
-        
         public string? Password { get; set; }
 
         public string? PhoneNumber { get;set; }

@@ -22,6 +22,10 @@ namespace DataBulkAPI.Controllers
     {
 
 #pragma warning disable CS8604 // Possible null reference return.
+#pragma warning disable CS8602 // Possible null reference return.
+#pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CA1850 // Possible null reference return.
+
 
 
 
@@ -48,12 +52,6 @@ namespace DataBulkAPI.Controllers
         }
 
 
-
-
-
-
-
-
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register(RegisterUserRequestModel newUser)
@@ -73,13 +71,13 @@ namespace DataBulkAPI.Controllers
                     {
                         Username = newUser.Email,
                         EmailAddress = newUser.Email,
-                        Password = HashPassword(newUser.Password) ,
-                    
+                        Password = HashPassword(newUser.Password),
+
                         Role = "Default"
-                        };
-                        await _db.Users.AddAsync(user);
-                        await _db.SaveChangesAsync();   
-                        return Ok($"User added {newUser.Email}");
+                    };
+                    await _db.Users.AddAsync(user);
+                    await _db.SaveChangesAsync();
+                    return Ok($"User added {newUser.Email}");
                 }
                 catch (Exception ex)
                 {

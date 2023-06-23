@@ -21,7 +21,7 @@ namespace DataBulkAPI.Controllers
             _dbContext = dbContext;
         }
 
-      
+      //Action to get all actors------------------------------------------------------------
         [HttpGet]
         public async Task<IActionResult> ListActors()
         {
@@ -32,7 +32,11 @@ namespace DataBulkAPI.Controllers
             }
             return Ok(await _dbContext.Actors.ToListAsync());
         }
+        //------------------------------------------------------------------------------------
 
+
+
+        //Action to get an actor based to the provided ID--------------------------------------
         [HttpGet]
         [Route("{id:guid}")]
         public async Task<IActionResult> Actor([FromRoute]Guid id)
@@ -44,23 +48,26 @@ namespace DataBulkAPI.Controllers
             }
             return Ok(actor);
         }
+        //---------------------------------------------------------------------------------------
 
 
+
+
+        //Action to add a new actor on the database-----------------------------------------------
         [HttpPost]
         public async Task<IActionResult> AddActor(AddActorRequestModel actorToAdd)
         {
             var checkEmail = _dbContext.Actors.FirstOrDefault(e => e.Email == actorToAdd.Email);
-            var checkPhone= _dbContext.Actors.FirstOrDefault(e => e.Phone == actorToAdd.Phone);
+            var checkPhone= _dbContext.Actors.FirstOrDefault(p => p.Phone == actorToAdd.Phone);
             if (checkPhone != null)
             {
-                ModelState.AddModelError("", $"The number {checkPhone.Phone} is in used");
-                return BadRequest(ModelState);
-                
+                ModelState.AddModelError("", $"The number {checkPhone.Phone} is in use");
+                return BadRequest(ModelState);  
             }
 
             if (checkEmail != null)
             {
-                ModelState.AddModelError("", $"The email {checkEmail.Email} is in used");
+                ModelState.AddModelError("", $"The email {checkEmail.Email} is in use");
                 return BadRequest(ModelState);
             }
 
@@ -83,7 +90,13 @@ namespace DataBulkAPI.Controllers
 
             return BadRequest(ModelState);
         }
+        //----------------------------------------------------------------------------------------
 
+
+
+
+
+        //Action to update an actor on the database-----------------------------------------------
         [HttpPut]
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateActor([FromRoute] Guid id, UpdateActorRequestModel actorToUpdate)
@@ -98,7 +111,7 @@ namespace DataBulkAPI.Controllers
                 }
 
                 var checkEmail=_dbContext.Actors.FirstOrDefault(e=>e.Email == actorToUpdate.Email);
-                var checkPhone=_dbContext.Actors.FirstOrDefault(e=>e.Phone == actorToUpdate.Phone);
+                var checkPhone=_dbContext.Actors.FirstOrDefault(p=>p.Phone == actorToUpdate.Phone);
 
                 if(checkEmail != null)
                 {
@@ -130,27 +143,35 @@ namespace DataBulkAPI.Controllers
             return BadRequest(ModelState);
   
         }
+        //----------------------------------------------------------------------------------------
 
+
+
+
+
+        //Action to delete an actor---------------------------------------------------------------
         [HttpDelete]
         [Route("{id:guid}")]
         public async Task<IActionResult> DeleteActor([FromRoute] Guid id)
         {
             try
             {
-            var actor = await _dbContext.Actors.FindAsync(id);
-            if (actor == null)
-            {
-                return NotFound($"There is no actor with ID:{id}");
+                var actor = await _dbContext.Actors.FindAsync(id);
+                if (actor == null)
+                {
+                    return NotFound($"There is no actor with ID:{id}");
+                }
+                _dbContext.Actors.Remove(actor);
+                await _dbContext.SaveChangesAsync();
+                return Ok(actor);
             }
-           _dbContext.Actors.Remove(actor);
-            await _dbContext.SaveChangesAsync();
-            return Ok(actor); 
-            }catch (Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
- 
+
         }
+        //-----------------------------------------------------------------------------------------
 
     }
 }

@@ -18,7 +18,7 @@ namespace DataBulkAPI.Models
         public string? Email { get; set; }
 
 
-        [Required(ErrorMessage ="Provide a position for this member")]
+        [Required(ErrorMessage ="Provide a position for this actor")]
         public string? Position { get; set;}
 
 

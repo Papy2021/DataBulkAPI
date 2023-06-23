@@ -27,10 +27,10 @@ namespace DataBulkAPI.Controllers
                 try
                 {
 
-                    var userExist = _db.Users.FirstOrDefault(u => u.Username == user.userName);
+                    var userExist = _db.Users.FirstOrDefault(u => u.Username == user.UserName);
                     if (userExist == null)
                     {
-                        return BadRequest($"The user: {user.userName} do not exist");
+                        return BadRequest($"The user: {user.UserName} do not exist");
                     }
 
                     var userToUpdate = await _db.Users.FindAsync(userExist.Id);
@@ -59,10 +59,10 @@ namespace DataBulkAPI.Controllers
                 try
                 {
            
-                    var userExist = _db.Users.FirstOrDefault(u => u.Username == user.userName);
+                    var userExist = _db.Users.FirstOrDefault(u => u.Username == user.UserName);
                     if (userExist == null)
                     {
-                        return BadRequest($"The user: {user.userName} do not exist");
+                        return BadRequest($"The user: {user.UserName} do not exist");
                     }
 
                     var userToUpdate =await _db.Users.FindAsync(userExist.Id);
@@ -93,10 +93,10 @@ namespace DataBulkAPI.Controllers
                 try
                 {
 
-                    var userExist = _db.Users.FirstOrDefault(u => u.Username == user.userName);
+                    var userExist = _db.Users.FirstOrDefault(u => u.Username == user.UserName);
                     if (userExist == null)
                     {
-                        return BadRequest($"The user: {user.userName} do not exist");
+                        return BadRequest($"The user: {user.UserName} do not exist");
                     }
 
                     var userToUpdate = await _db.Users.FindAsync(userExist.Id);
@@ -104,7 +104,7 @@ namespace DataBulkAPI.Controllers
                     {
                         userToUpdate.Role = "SuperAdmin";
                         await _db.SaveChangesAsync();
-                        return Ok($"{userToUpdate.Username} is now an super-admin");
+                        return Ok($"{userToUpdate.Username} is now a Super-Admin");
                     }
 
                 }
