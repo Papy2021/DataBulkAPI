@@ -4,6 +4,7 @@ using DataBulkAPI.DataRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataBulkAPI.Migrations
 {
     [DbContext(typeof(DataBulkDbContext))]
-    partial class DataBulkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240513093114_Initial_Migration")]
+    partial class Initial_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

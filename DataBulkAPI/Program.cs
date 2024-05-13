@@ -30,7 +30,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddDbContext<DataBulkDbContext>(options =>
 {
-    var connectionS = builder.Configuration.GetConnectionString("DataBulkCS");
+    var connectionS = builder.Configuration.GetConnectionString("DataBalk");
     options.UseSqlServer(connectionS);
 });
 

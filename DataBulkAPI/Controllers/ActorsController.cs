@@ -12,6 +12,7 @@ namespace DataBulkAPI.Controllers
     [ApiController]
     [Route("api/v1/[controller]")]
     [Authorize]
+    //[AllowAnonymous]
     public class ActorsController : ControllerBase
     {
         private readonly DataBulkDbContext _dbContext;
