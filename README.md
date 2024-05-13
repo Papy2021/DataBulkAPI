@@ -1,12 +1,8 @@
-# DataBulkAPI
-the API is a resful API design using Asp.net core, to be abble to open the soucre code on the visual studio or an software the required .NET 7.0
-the API got 2 main entities the Actors that was used the create CRUD operations and the Users that's use for security and authentification.
-the Authorized is a bearer Token that is generated when the user provided the correct username and password while login into the app.
-the tokens are generated using JWT.
-the password is encrypted using an method HashMethod, that added more security as the password will not be saved in plain-text to the database. 
-the generated token expiry 15mins from the time it was created.
+# DataBalkAPI
+The API is a RESTful API designed using ASP.NET Core. To open the source code in Visual Studio or any software, .NET 7.0 is required. The API comprises two main entities: Actors, which are used for CRUD operations, and Users, which handle security and authentication.
 
-the data model was created using EF, find the connection string at the appsetting.json for more information.
+Authorization is performed using a bearer token, which is generated when the user provides the correct username and password during login. Tokens are generated using JWT (JSON Web Tokens). Passwords are encrypted using a hashing method, enhancing security by ensuring that passwords are not stored in plain text in the database. Tokens expire 15 minutes after their creation time.
 
+The data model was created using EF (Entity Framework). For more information, find the connection string in the appsettings.json file.
 
-regards Papy
+Best regards, Papy
